@@ -18,7 +18,7 @@ before_install:
     - gcloud config set compute/zone asia-southeast2-a
     - gcloud container clusters get-credentials multi-k8s
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker build -t strelok2911/multi-client-test -f ./client/Dockerfile.dev
+    - docker build -t strelok2911/multi-client-test -f ./client/Dockerfile.dev ./client
 
 script:
     - docker run -e CI=true strelok2911/multi-client-test npm test
