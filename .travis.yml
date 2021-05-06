@@ -1,0 +1,23 @@
+language: generic
+sudo : required
+services:
+    - docker
+
+before_install:
+    - docker build -t strelok2911/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true strelok2911/react-test npm test
+
+after_success:
+    - docker build -t strelok2911/multi-client ./client
+    - docker build -t strelok2911/multi-nginx ./nginx
+    - docker build -t strelok2911/multi-server ./server
+    - docker build -t strelok2911/multi-worker ./worker
+
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    - docker push strelok2911/multi-client
+    - docker push strelok2911/multi-nginx
+    - docker push strelok2911/multi-server
+    - docker push strelok2911/multi-worker
