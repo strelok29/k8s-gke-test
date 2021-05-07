@@ -13,11 +13,11 @@ before_install:
     - curl https://sdk.cloud.google.com | bash > /dev/null;
     - source $HOME/google-cloud-sdk/path.bash.inc
     - gcloud components update
+    - gcloud services enable containerregistry.googleapis.com
     - gcloud auth activate-service-account --key-file service-account.json
     - gcloud config set project multi-k8s-312904
     - gcloud config set compute/zone asia-southeast2-a
     - gcloud container clusters get-credentials multi-k8s
-    - gcloud services enable containerregistry.googleapis.com
    # - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     - docker build -t gcr.io/strelok2911/multi-client-test -f ./client/Dockerfile.dev ./client
     - docker push gcr.io/strelok2911/multi-client-test
