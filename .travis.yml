@@ -17,16 +17,16 @@ before_install:
     - gcloud config set project multi-k8s-312904
     - gcloud config set compute/zone asia-southeast2-a
     - gcloud container clusters get-credentials multi-k8s
-    - sudo gcloud services enable containerregistry.googleapis.com
-   # - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker build -t asia.gcr.io/strelok2911/multi-client-test -f ./client/Dockerfile.dev ./client
-    - docker push asia.gcr.io/strelok2911/multi-client-test
+    # - sudo gcloud services enable containerregistry.googleapis.com
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker build -t strelok2911/multi-client-test -f ./client/Dockerfile.dev ./client
+    - docker push strelok2911/multi-client-test
 
 script:
-    - docker run -e CI=true asia.gcr.io/strelok2911/multi-client-test npm test
+    - docker run -e CI=true strelok2911/multi-client-test npm test
 
-# deploy: 
-#     provider: script
-#     script: bash ./deploy.sh
-#     on:
-#         branch: master
+deploy: 
+    provider: script
+    script: bash ./deploy.sh
+    on:
+        branch: master
