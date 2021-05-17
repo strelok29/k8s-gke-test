@@ -16,10 +16,10 @@ before_install:
     - gcloud auth activate-service-account --key-file service-account.json
     - gcloud config set project multi-k8s-312904
     - gcloud config set compute/zone asia-southeast2-a
-    - gcloud container clusters get-credentials multi-k8s
+    - gcloud container clusters get-credentials multi-k8s 
     #- sudo gcloud services enable containerregistry.googleapis.com
+    # - echo "$GCR_DOCKER_PASSWORD" | docker login -u "$GCR_DOCKER_USERNAME" --password-stdin
     - gcloud auth configure-docker
-   # - echo "$GCR_DOCKER_PASSWORD" | docker login -u "$GCR_DOCKER_USERNAME" --password-stdin
     - docker build -t asia.gcr.io/multi-k8s-312904/multi-client-test -f ./client/Dockerfile.dev ./client
     - docker push asia.gcr.io/multi-k8s-312904/multi-client-test
 
