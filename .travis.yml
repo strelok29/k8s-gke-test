@@ -26,8 +26,8 @@ before_install:
 script:
     - docker run -e CI=true asia.gcr.io/multi-k8s-312904/multi-client-test npm test
 
-# deploy: 
-#     provider: script
-#     script: bash ./deploy.sh
-#     on:
-#         branch: master
+deploy: 
+    provider: script
+    script: bash ./deploy.sh
+    on:
+        branch: master
